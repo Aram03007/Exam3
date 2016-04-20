@@ -15,6 +15,11 @@ public class Circle {
         return id;
     }
 
+
+    public void setRadius(float radius) {
+        this.radius = radius;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

@@ -47,7 +47,7 @@ public class AnimationView extends View {
         this.bitmapPointer = new BitmapPointer(bitmap, x, y);
 
         ValueAnimator animatorBitmap = ValueAnimator.ofInt(0, 100);
-        animatorBitmap.setDuration(700);
+        animatorBitmap.setDuration(400);
         animatorBitmap.setInterpolator(new DecelerateInterpolator());
         animatorBitmap.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override

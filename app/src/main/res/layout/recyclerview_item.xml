@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
 
-        android:scaleType="fitXY" />
+        android:scaleType="centerCrop" />
 
     <ProgressBar
         android:id="@+id/myProgressBar"

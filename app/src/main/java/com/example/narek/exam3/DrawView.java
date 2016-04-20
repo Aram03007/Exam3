@@ -1,5 +1,6 @@
 package com.example.narek.exam3;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,10 +12,12 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,10 +94,29 @@ public class DrawView extends View {
 
                 radius = tmp + 20;
                 if (!active) {
-                    Circle circle = new Circle( pointerId,event.getX(), event.getY(), radius, randomColor);
+                    final Circle circle = new Circle( pointerId,event.getX(), event.getY(), radius, randomColor);
                     circles.add(pointerId, circle);
                     curCircle = circle;
                     index = circle.getId();
+                    final int curRadius = (int) circle.getRadius();
+                    new Handler().post(new Runnable() {
+                        @Override
+                        public void run() {
+
+                        }
+                    });
+
+                    ValueAnimator animator = ValueAnimator.ofFloat(0, curRadius);
+                    animator.setDuration(300);
+                    animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            circle.setRadius((Float) animation.getAnimatedValue());
+                            invalidate();
+                        }
+                    });
+                    animator.start();
                 }
 
             case MotionEvent.ACTION_POINTER_DOWN: {
@@ -223,6 +245,9 @@ public class DrawView extends View {
         for (int i = 0; i < images.size(); i++) {
             rect.set((int) images.get(i).point.x, (int) images.get(i).point.y, images.get(i).right, images.get(i).bottom);
             if (!images.get(i).remove) {
+                float starty = (images.get(i).bottom - images.get(i).point.y+ images.get(i).bitmap.getHeight())/2;
+                rect.set(rect.left, rect.top - (int) starty, rect.right, (int) (rect.bottom + starty));
+
                 canvas.drawBitmap(images.get(i).bitmap, null, rect, null);
 
             }
@@ -237,7 +262,23 @@ public class DrawView extends View {
         private int bottom;
         private boolean remove = false;
 
-        public Image( Bitmap bitmap, float x, float y, int right, int bottom) {
+        public PointF getPoint() {
+            return point;
+        }
+
+        public void setPoint(PointF point) {
+            this.point = point;
+        }
+
+        public Bitmap getBitmap() {
+            return bitmap;
+        }
+
+        public void setBitmap(Bitmap bitmap) {
+            this.bitmap = bitmap;
+        }
+
+        public Image(Bitmap bitmap, float x, float y, int right, int bottom) {
             point = new PointF(x, y);
             this.bitmap = bitmap;
             this.right = right;

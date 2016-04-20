@@ -41,6 +41,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             @Override
             protected void onPreExecute() {
                 viewHolder.items++;
+                if (viewHolder.myAsyncTask != null) {
+                    viewHolder.myAsyncTask.cancel(false);
+                }
                 viewHolder.myAsyncTask = this;
                 viewHolder.progressBar.setVisibility(View.VISIBLE);
             }
@@ -58,6 +61,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                 viewHolder.icon.setImageBitmap(bmp);
             }
         };
+        viewHolder.icon.setImageBitmap(null);
+
 
         asyncTask.execute(i);
     }
