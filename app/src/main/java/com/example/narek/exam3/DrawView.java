@@ -130,6 +130,7 @@ public class DrawView extends View {
                     for (int i = 0; i < images.size(); i++) {
                         if (images.get(i).containsPoint(event.getX(pointerIndex), event.getY(pointerIndex))) {
                             images.remove(i);
+                            invalidate();
                             return false;
                         }
                     }
@@ -138,6 +139,7 @@ public class DrawView extends View {
                     for (int i = 0; i < circles.size(); i++) {
                         if (circles.get(i).containsPoint(event.getX(pointerIndex), event.getY(pointerIndex))) {
                             circles.remove(i);
+                            invalidate();
                             return false;
                         }
                     }
