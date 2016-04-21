@@ -39,6 +39,7 @@ public class DrawView extends View {
     Paint linePaint;
     Circle curCircle;
     boolean active = false;
+    boolean t = false;
 //    private int index = -1;
 
     public DrawView(Context context, AttributeSet attrs) {
@@ -123,6 +124,7 @@ public class DrawView extends View {
             case MotionEvent.ACTION_MOVE: {
                 curCircle.setCenterX(event.getX());
                 curCircle.setCenterY(event.getY());
+                t = true;
                 break;
             }
             case MotionEvent.ACTION_UP:
@@ -135,7 +137,7 @@ public class DrawView extends View {
                         }
                     }
                 }
-                if (event.getEventTime() - event.getDownTime() >= 1000) {
+                if (event.getEventTime() - event.getDownTime() >= 1000 && active && !t) {
                     for (int i = 0; i < circles.size(); i++) {
                         if (circles.get(i).containsPoint(event.getX(pointerIndex), event.getY(pointerIndex))) {
                             circles.remove(i);
@@ -149,7 +151,8 @@ public class DrawView extends View {
 
                 active = false;
                 curCircle = null;
-
+                t = false;
+                
             case MotionEvent.ACTION_POINTER_UP:
             case MotionEvent.ACTION_CANCEL:
         }
@@ -249,7 +252,7 @@ public class DrawView extends View {
         for (int i = 0; i < images.size(); i++) {
             rect.set((int) images.get(i).point.x, (int) images.get(i).point.y, images.get(i).right, images.get(i).bottom);
             if (!images.get(i).remove) {
-                float starty = (images.get(i).bottom - images.get(i).point.y- images.get(i).bitmap.getHeight())/2;
+                float starty = (images.get(i).bottom - images.get(i).point.y- images.get(i).bitmap.getHeight())/10;
                 rect.set(rect.left, rect.top + (int) starty, rect.right, (int) (rect.bottom - starty));
 
                 canvas.drawBitmap(images.get(i).bitmap, null, rect, null);
