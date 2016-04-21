@@ -39,7 +39,7 @@ public class DrawView extends View {
     Paint linePaint;
     Circle curCircle;
     boolean active = false;
-    private int index = -1;
+//    private int index = -1;
 
     public DrawView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -78,7 +78,7 @@ public class DrawView extends View {
                 for (int i = 0; i < circles.size(); i++) {
                     if (circles.get(i).containsPoint(event.getX(pointerIndex), event.getY(pointerIndex))) {
                         curCircle = circles.get(i);
-                        index = circles.get(i).getId();
+//                        index = circles.get(i).getId();
                         active = true;
                         invalidate();
                         return true;
@@ -93,7 +93,7 @@ public class DrawView extends View {
                     final Circle circle = new Circle( pointerId,event.getX(), event.getY(), radius, randomColor);
                     circles.add(pointerId, circle);
                     curCircle = circle;
-                    index = circle.getId();
+//                    index = circle.getId();
                     final int curRadius = (int) circle.getRadius();
                     new Handler().post(new Runnable() {
                         @Override
@@ -126,10 +126,7 @@ public class DrawView extends View {
                 break;
             }
             case MotionEvent.ACTION_UP:
-                if (event.getEventTime() - event.getDownTime() >= 1000 && index !=-1) {
-                    circles.remove(index);
-                }
-                if (event.getEventTime() - event.getDownTime() >= 1000 && index !=-1) {
+                if (event.getEventTime() - event.getDownTime() >= 1000 ) {
                     for (int i = 0; i < images.size(); i++) {
                         if (images.get(i).containsPoint(event.getX(pointerIndex), event.getY(pointerIndex))) {
                             images.remove(i);
@@ -137,6 +134,15 @@ public class DrawView extends View {
                         }
                     }
                 }
+                if (event.getEventTime() - event.getDownTime() >= 1000) {
+                    for (int i = 0; i < circles.size(); i++) {
+                        if (circles.get(i).containsPoint(event.getX(pointerIndex), event.getY(pointerIndex))) {
+                            circles.remove(i);
+                            return false;
+                        }
+                    }
+                }
+
 
 
                 active = false;
