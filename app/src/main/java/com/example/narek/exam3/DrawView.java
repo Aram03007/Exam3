@@ -245,8 +245,8 @@ public class DrawView extends View {
         for (int i = 0; i < images.size(); i++) {
             rect.set((int) images.get(i).point.x, (int) images.get(i).point.y, images.get(i).right, images.get(i).bottom);
             if (!images.get(i).remove) {
-                float starty = (images.get(i).bottom - images.get(i).point.y+ images.get(i).bitmap.getHeight())/2;
-                rect.set(rect.left, rect.top - (int) starty, rect.right, (int) (rect.bottom + starty));
+                float starty = (images.get(i).bottom - images.get(i).point.y- images.get(i).bitmap.getHeight())/2;
+                rect.set(rect.left, rect.top + (int) starty, rect.right, (int) (rect.bottom - starty));
 
                 canvas.drawBitmap(images.get(i).bitmap, null, rect, null);
 
