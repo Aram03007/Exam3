@@ -265,19 +265,15 @@ public class DrawView extends View {
         public PointF getPoint() {
             return point;
         }
-
         public void setPoint(PointF point) {
             this.point = point;
         }
-
         public Bitmap getBitmap() {
             return bitmap;
         }
-
         public void setBitmap(Bitmap bitmap) {
             this.bitmap = bitmap;
         }
-
         public Image(Bitmap bitmap, float x, float y, int right, int bottom) {
             point = new PointF(x, y);
             this.bitmap = bitmap;
