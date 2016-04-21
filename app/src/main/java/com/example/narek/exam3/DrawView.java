@@ -41,10 +41,6 @@ public class DrawView extends View {
     boolean active = false;
     private int index = -1;
 
-
-
-
-
     public DrawView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
